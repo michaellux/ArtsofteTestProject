@@ -7,8 +7,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-string connection = builder.Configuration.GetConnectionString("DefaultConnection");
-builder.Services.AddDbContext<ItpdevelopmentTestProjectContext>(options => options.UseSqlServer(connection));
+string connection = builder.Configuration.GetConnectionString("DefaultConnection")!;
+builder.Services.AddDbContext<ArtsofteTestProjectContext>(options => options.UseSqlServer(connection));
 
 builder.Services.AddScoped<IEmployeeData, SqlEmployeeData>();
 

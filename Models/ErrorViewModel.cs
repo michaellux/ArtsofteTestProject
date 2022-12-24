@@ -1,4 +1,4 @@
-namespace ArtsofteTestProject.Models
+namespace ItpdevelopmentTestProject.Models
 {
     public class ErrorViewModel
     {

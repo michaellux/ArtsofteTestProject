@@ -2,6 +2,7 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace ArtsofteTestProject.Models;
 
@@ -19,5 +20,6 @@ public partial class EmployeePlace
 
     public virtual Employee Employee { get; set; }
 
+    [Display(Name = "Programming language")]
     public virtual ProgrammingLanguage ProgrammingLanguage { get; set; }
 }
