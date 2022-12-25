@@ -1,6 +1,9 @@
 ﻿using ArtsofteTestProject.Models;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System.Collections;
+using System.Xml.Linq;
+using static Azure.Core.HttpHeader;
 
 namespace ArtsofteTestProject.Services
 {
@@ -28,10 +31,35 @@ namespace ArtsofteTestProject.Services
             _context = context;
         }
 
+        //public bool StoredProcedureExists(string procedureName)
+        //{
+        //    return _context.Database.SqlQueryRaw<int>("SELECT COUNT(*) FROM sys.objects WHERE type = 'P' AND name = @uspName",
+        //                               new SqlParameter("@uspName", procedureName)).Single() == 0;
+        //}
+
         public void AddEmployee(Employee newEmployee)
         {
             _context.Employee.Add(newEmployee);
             _context.SaveChanges();
+            //string storedProcedure = "InsertEmployee";
+            //if (StoredProcedureExists(storedProcedure))
+            //{
+            //    SqlParameter paramId = new("@p_Id", newEmployee.Id);
+            //    SqlParameter paramName = new("@p_Name", newEmployee.Name);
+            //    SqlParameter paramSurname = new("@p_Surname", newEmployee.Surname);
+            //    SqlParameter paramAge = new("@p_Age", newEmployee.Age);
+            //    SqlParameter paramGender = new("@p_Gender", newEmployee.Gender);
+
+            //    //_context.Employee.FromSqlRaw(
+            //    //    $"{storedProcedure} @p_Id, @p_Name, @p_Surname, @p_Age, @p_Gender",
+            //    //    paramId, paramName, paramSurname, paramAge, paramGender
+            //    //);
+
+            //_context.Database.ExecuteSqlRaw(
+            //    $"{storedProcedure} @p_Id, @p_Name, @p_Surname, @p_Age, @p_Gender",
+            //    newEmployee.Id, newEmployee.Name, newEmployee.Surname, newEmployee.Age, newEmployee.Gender
+            //);
+            ////}
         }
 
         public void AddEmployeePlace(EmployeePlace newEmployeePlace)
