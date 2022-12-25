@@ -12,7 +12,8 @@
                     <div class="row mb-3">
                         @Html.LabelFor(m => m.Employee.Name, new { @class= "col-form-label, col-sm-6" })
                         <div class="col-sm-6">
-                            @Html.TextBoxFor(m => m.Employee.Name, new { @class= "form-control" })
+                            <input type="text" class="form-control" name="Employee.Name" data-autocomplete-source='@Url.Action("AutocompleteSearch", "ListEmployee")' />
+                            @*@Html.TextBoxFor(m => m.Employee.Name, new { @class= "form-control", data-autocomplete-source='@Url.Action("AutocompleteSearch", "Home")' })*@
                         </div>
                     </div>
                     <div class="row mb-3">
@@ -49,9 +50,22 @@
                     </div>
                     <div class="mb-3">
                         <input type="submit" value="Add" class="btn btn-success" />
+                        <a href="/" class="btn btn-danger" role="button">Cancel</a>
                     </div>
                 }
             </div>
         </div>
     </div>
 </div>
+
+@section Scripts
+{
+    <script type="text/javascript">
+        $(function () {
+            $("[data-autocomplete-source]").each(function () {
+                var target = $(this);
+                target.autocomplete({ source: target.attr("data-autocomplete-source") });
+            });
+        });
+    </script>
+}

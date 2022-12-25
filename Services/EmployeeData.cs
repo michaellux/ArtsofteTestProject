@@ -6,12 +6,14 @@ namespace ArtsofteTestProject.Services
 {
     public interface IEmployeeData
     {
+        IEnumerable<Employee> GetAllEmployee();
         IEnumerable<EmployeePlace> GetAllEmployeePlaces();
         IEnumerable<Department> GetAllDepartments();
         IEnumerable<ProgrammingLanguage> GetAllProgrammingLanguages();
         void EditEmployeePlace(EmployeePlace employeePlace);
         void EditEmployee(Employee employee);
         void AddEmployee(Employee newEmployee);
+        void DeleteEmployeePlace(EmployeePlace employeePlace);
         void AddEmployeePlace(EmployeePlace newEmployeePlace);
         EmployeePlace GetEmployeePlace(Guid? id);
         Employee GetEmployee(Guid? id);
@@ -76,6 +78,17 @@ namespace ArtsofteTestProject.Services
         public Employee GetEmployee(Guid? id)
         {
             return _context.Employee.FirstOrDefault(employee => employee.Id == id);
+        }
+
+        public IEnumerable<Employee> GetAllEmployee()
+        {
+            return _context.Employee.ToList();
+        }
+
+        public void DeleteEmployeePlace(EmployeePlace employeePlace)
+        {
+            _context.EmployeePlace.Remove(employeePlace);
+            _context.SaveChanges();
         }
     }
 }

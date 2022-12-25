@@ -2,10 +2,10 @@
 using ArtsofteTestProject.Services;
 using ArtsofteTestProject.ViewModels;
 using ItpdevelopmentTestProject.Models;
+using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Diagnostics;
-using System.Reflection;
 
 namespace ArtsofteTestProject.Controllers
 {
@@ -25,6 +25,35 @@ namespace ArtsofteTestProject.Controllers
                 EmployeePlaces = _employeeData.GetAllEmployeePlaces()
             };
             return View(model);
+        }
+
+        public IActionResult DeleteEmployeePlace()
+        {
+            var form = HttpContext.Request.Form;
+            var idForRemove = form.Keys.FirstOrDefault();
+
+            try
+            {
+                var employeePlace = _employeeData.GetEmployeePlace(new Guid(idForRemove));
+
+                _employeeData.DeleteEmployeePlace(employeePlace);
+            }
+            catch (Exception e)
+            {
+                //return FormResult.CreateErrorResult($"Problem with remove: {e.Message}");
+            }
+
+            return Content("test");
+        }
+
+        public JsonResult AutocompleteSearch(string term)
+        {
+            var names = _employeeData.GetAllEmployee()
+                .Where( a => a.Name.Contains(term))
+                 .Select(a => new { value = a.Name })
+                            .Distinct();
+
+            return Json(names);
         }
 
         [Route("add")]

@@ -21,7 +21,7 @@
         <tbody>
             @foreach (var employeePlace in Model.EmployeePlaces)
             {
-                <tr>
+                <tr id="@employeePlace.Id">
                     <td>@employeePlace.Employee.Name</td>
                     <td>@employeePlace.Employee.Surname</td>
                     <td>@employeePlace.Employee.Age</td>
@@ -29,10 +29,29 @@
                     <td>@employeePlace.ProgrammingLanguage.Name</td>
                     <td>
                         <a href="/edit?id=@employeePlace.Id" class="btn btn-info" role="button">Change</a>
-                        <input name="@employeePlace.Id" onclick="Delete(this)" type="button" class="btn btn-danger delete" value="Delete" />
+                        <input name="@employeePlace.Id" onclick="DeleteEmployeePlace(this)" type="button" class="btn btn-danger delete" value="Delete" />
                     </td>
                 </tr>
             }
         </tbody>
     </table>
 </div>
+
+@section Scripts
+{
+    <script>
+        function DeleteEmployeePlace(e) {
+            $.ajax({
+                type: "POST",
+                data: e.name,
+                url: 'ListEmployee/DeleteEmployeePlace',
+                contentType: 'application/x-www-form-urlencoded',
+                success: function(data)
+                {
+                    console.log("success");
+                    document.getElementById(e.name).remove();
+                }
+            });
+       }
+    </script>
+}
