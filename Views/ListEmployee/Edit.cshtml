@@ -9,6 +9,8 @@
             <div class="col-10">
                 @using (Html.BeginForm())
                 {
+                    <input type="hidden" name="EmployeePlace.Id" value="@Model.EmployeePlace.Id" />
+                    <input type="hidden" name="Employee.Id" value="@Model.Employee.Id" />
                     <div class="row mb-3">
                         @Html.LabelFor(m => m.Employee.Name, new { @class= "col-form-label, col-sm-6" })
                         <div class="col-sm-6">
@@ -36,26 +38,26 @@
                     <div class="row mb-3">
                         @Html.LabelFor(m => m.EmployeePlace.Department, new { @class= "col-form-label, col-sm-6" })
                         <div class="col-sm-6">
-                        <select name="EmployeePlace.Department.Name" class="form-control">
-                        <option value="" disabled>Choose a department</option>
-                        @foreach (var department in Model.Departments)
-                        {
-                            if (department.Id == Model.EmployeePlace.Department.Id)
-                            {
-                                <option value="@department.Id" selected>@department.Name</option>
-                            }
-                            else
-                            {
+                            <select name="EmployeePlace.DepartmentId" class="form-control">
+                                <option value="" disabled>Choose a department</option>
+                                @foreach (var department in Model.Departments)
+                                {
+                                    if (department.Id == Model.EmployeePlace.Department.Id)
+                                    {
+                                        <option value="@department.Id" selected>@department.Name</option>
+                                    }
+                                    else
+                                    {
                                         <option value="@department.Id">@department.Name</option>
-                            }
-                        }
-                    </select>
+                                    }
+                                }
+                            </select>
                         </div>
                     </div>
                     <div class="row mb-3">
                         @Html.LabelFor(m => m.EmployeePlace.ProgrammingLanguage, new { @class= "col-form-label, col-sm-6" })
                         <div class="col-sm-6">
-                            <select name="EmployeePlace.ProgrammingLanguage.Name" class="form-control">
+                            <select name="EmployeePlace.ProgrammingLanguageId" class="form-control">
                                 <option value="" disabled>Choose a programming language</option>
                                 @foreach (var programmingLanguage in Model.ProgrammingLanguages)
                                 {
@@ -73,7 +75,7 @@
                         </div>
                     </div>
                     <div class="mb-3">
-                        <input type="submit" value="Add" />
+                        <input type="submit" value="Save" />
                     </div>
                 }
             </div>

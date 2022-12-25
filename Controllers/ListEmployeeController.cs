@@ -5,6 +5,7 @@ using ItpdevelopmentTestProject.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Diagnostics;
+using System.Reflection;
 
 namespace ArtsofteTestProject.Controllers
 {
@@ -19,8 +20,10 @@ namespace ArtsofteTestProject.Controllers
 
         public IActionResult Index()
         {
-            var model = new ListEmployeePageViewModel();
-            model.EmployeePlaces = _employeeData.GetAllEmployeePlaces();
+            var model = new ListEmployeePageViewModel
+            {
+                EmployeePlaces = _employeeData.GetAllEmployeePlaces()
+            };
             return View(model);
         }
 
@@ -69,15 +72,14 @@ namespace ArtsofteTestProject.Controllers
         {
             if (id != null)
             {
-                //ViewBag.departmentList = _employeeData.GetAllDepartments();
-                //ViewBag.programmingLanguageList = _employeeData.GetAllProgrammingLanguages();
-
-                var model = new EditEmployeePageViewModel();
-                model.EmployeePlace = _employeeData.GetEmployeePlace(id);
+                var model = new EditEmployeePageViewModel
+                {
+                    EmployeePlace = _employeeData.GetEmployeePlace(id)
+                };
                 model.Employee = _employeeData.GetEmployee(model.EmployeePlace.EmployeeId);
                 model.Departments = _employeeData.GetAllDepartments();
                 model.ProgrammingLanguages = _employeeData.GetAllProgrammingLanguages();
-                
+
                 if (model == null)
                 {
                     return NotFound($"Employee place with id = {id} not found");
@@ -88,7 +90,28 @@ namespace ArtsofteTestProject.Controllers
             return NotFound();
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        [Route("edit")]
+        [HttpPost]
+        public IActionResult Edit(EditEmployeePageViewModel model)
+        {
+            var employee = _employeeData.GetEmployee(model.Employee.Id);
+            employee.Name = model.Employee.Name;
+            employee.Surname = model.Employee.Surname;
+            employee.Age = model.Employee.Age;
+            employee.Gender = model.Employee.Gender;
+            _employeeData.EditEmployee(employee);
+
+            var employeePlace = _employeeData.GetEmployeePlace(model.EmployeePlace.Id);
+            employeePlace.EmployeeId = employee.Id;
+            employeePlace.DepartmentId = model.EmployeePlace.DepartmentId;
+            employeePlace.ProgrammingLanguageId = model.EmployeePlace.ProgrammingLanguageId;
+            _employeeData.EditEmployeePlace(employeePlace);
+
+            return RedirectToAction("Index");
+        }
+
+
+            [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });

@@ -5,7 +5,7 @@
 <div class="text-center">
     <h1 class="display-4 .main__list">@ViewData["Title"]</h1>
     <div class="mb-3">
-        <input class="btn btn-success" type="button" value="Add" />
+        <a href="/add" class="btn btn-success" role="button">Add</a>
     </div>
     <table class="table table-striped">
         <thead>
@@ -28,7 +28,7 @@
                     <td>@employeePlace.Department.Name</td>
                     <td>@employeePlace.ProgrammingLanguage.Name</td>
                     <td>
-                        <input name="@employeePlace.Id" onclick="Change(this)" type="button" class="btn btn-primary change" value="Change" />
+                        <a href="/edit?id=@employeePlace.Id" class="btn btn-info" role="button">Change</a>
                         <input name="@employeePlace.Id" onclick="Delete(this)" type="button" class="btn btn-danger delete" value="Delete" />
                     </td>
                 </tr>

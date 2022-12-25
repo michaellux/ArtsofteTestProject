@@ -9,10 +9,9 @@ namespace ArtsofteTestProject.Services
         IEnumerable<EmployeePlace> GetAllEmployeePlaces();
         IEnumerable<Department> GetAllDepartments();
         IEnumerable<ProgrammingLanguage> GetAllProgrammingLanguages();
-
-        void Edit(EmployeePlace employeePlace);
+        void EditEmployeePlace(EmployeePlace employeePlace);
+        void EditEmployee(Employee employee);
         void AddEmployee(Employee newEmployee);
-
         void AddEmployeePlace(EmployeePlace newEmployeePlace);
         EmployeePlace GetEmployeePlace(Guid? id);
         Employee GetEmployee(Guid? id);
@@ -44,9 +43,16 @@ namespace ArtsofteTestProject.Services
             return _context.EmployeePlace.FirstOrDefault(employeePlace => employeePlace.Id == id);
         }
 
-        public void Edit(EmployeePlace employeePlace)
+        public void EditEmployeePlace(EmployeePlace employeePlace)
         {
-            throw new NotImplementedException();
+            _context.EmployeePlace.Update(employeePlace);
+            _context.SaveChanges();
+        }
+
+        public void EditEmployee(Employee employee)
+        {
+            _context.Employee.Update(employee);
+            _context.SaveChanges();
         }
 
         public IEnumerable<EmployeePlace> GetAllEmployeePlaces()
