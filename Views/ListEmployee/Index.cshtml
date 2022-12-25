@@ -1,7 +1,38 @@
-﻿@model ArtsofteTestProject.Models.EmployeePlace
+﻿@model ArtsofteTestProject.ViewModels.ListEmployeePageViewModel;
 @{
     ViewData["Title"] = "A list of employees";
 }
 <div class="text-center">
     <h1 class="display-4 .main__list">@ViewData["Title"]</h1>
+    <div class="mb-3">
+        <input class="btn btn-success" type="button" value="Add" />
+    </div>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Surname</th>
+                <th>Age</th>
+                <th>Department</th>
+                <th>Language</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var employeePlace in Model.EmployeePlaces)
+            {
+                <tr>
+                    <td>@employeePlace.Employee.Name</td>
+                    <td>@employeePlace.Employee.Surname</td>
+                    <td>@employeePlace.Employee.Age</td>
+                    <td>@employeePlace.Department.Name</td>
+                    <td>@employeePlace.ProgrammingLanguage.Name</td>
+                    <td>
+                        <input name="@employeePlace.Id" onclick="Change(this)" type="button" class="btn btn-primary change" value="Change" />
+                        <input name="@employeePlace.Id" onclick="Delete(this)" type="button" class="btn btn-danger delete" value="Delete" />
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>

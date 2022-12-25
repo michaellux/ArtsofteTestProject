@@ -1,4 +1,4 @@
-﻿@model ArtsofteTestProject.ViewModels.AddEmployeePageViewModel;
+﻿@model ArtsofteTestProject.ViewModels.EditEmployeePageViewModel
 @{
     ViewData["Title"] = "Adding an employee";
 }
@@ -34,17 +34,42 @@
                         </div>
                     </div>
                     <div class="row mb-3">
-                        @Html.LabelFor(m => m.Department, new { @class= "col-form-label, col-sm-6" })
+                        @Html.LabelFor(m => m.EmployeePlace.Department, new { @class= "col-form-label, col-sm-6" })
                         <div class="col-sm-6">
-                            @Html.DropDownListFor(m => m.Department, new SelectList(ViewBag.departmentList, "Id", "Name"),
-                        "Choose a department", new { @class = "form-control" })
+                        <select name="EmployeePlace.Department.Name" class="form-control">
+                        <option value="" disabled>Choose a department</option>
+                        @foreach (var department in Model.Departments)
+                        {
+                            if (department.Id == Model.EmployeePlace.Department.Id)
+                            {
+                                <option value="@department.Id" selected>@department.Name</option>
+                            }
+                            else
+                            {
+                                        <option value="@department.Id">@department.Name</option>
+                            }
+                        }
+                    </select>
                         </div>
                     </div>
                     <div class="row mb-3">
-                        @Html.LabelFor(m => m.ProgrammingLanguage, new { @class= "col-form-label, col-sm-6" })
+                        @Html.LabelFor(m => m.EmployeePlace.ProgrammingLanguage, new { @class= "col-form-label, col-sm-6" })
                         <div class="col-sm-6">
-                            @Html.DropDownListFor(m => m.ProgrammingLanguage, new SelectList(ViewBag.programmingLanguageList, "Id", "Name"),
-                        "Choose a language", new { @class = "form-control" })
+                            <select name="EmployeePlace.ProgrammingLanguage.Name" class="form-control">
+                                <option value="" disabled>Choose a programming language</option>
+                                @foreach (var programmingLanguage in Model.ProgrammingLanguages)
+                                {
+                                    if (programmingLanguage.Id == Model.EmployeePlace.ProgrammingLanguage.Id)
+                                    {
+                                        <option value="@programmingLanguage.Id" selected>@programmingLanguage.Name</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@programmingLanguage.Id">@programmingLanguage.Name</option>
+                                    }
+                                }
+                            </select>
+
                         </div>
                     </div>
                     <div class="mb-3">
@@ -55,3 +80,9 @@
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <script type="text/javascript">
+
+    </script>
+}

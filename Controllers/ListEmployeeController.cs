@@ -19,7 +19,9 @@ namespace ArtsofteTestProject.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            var model = new ListEmployeePageViewModel();
+            model.EmployeePlaces = _employeeData.GetAllEmployeePlaces();
+            return View(model);
         }
 
         [Route("add")]
@@ -35,29 +37,55 @@ namespace ArtsofteTestProject.Controllers
         [HttpPost]
         public IActionResult Add(AddEmployeePageViewModel model)
         {
-            var employee = new Employee();
-            employee.Id = Guid.NewGuid();
-            employee.Name = model.Employee.Name;
-            employee.Surname = model.Employee.Surname;
-            employee.Age = model.Employee.Age;
-            employee.Gender = model.Employee.Gender;
+            var form = Request.Form;
+            string departmentId = form["Department"]!;
+            string programmingLanguageId = form["ProgrammingLanguage"]!;
+
+            var employee = new Employee
+            {
+                Id = Guid.NewGuid(),
+                Name = model.Employee.Name,
+                Surname = model.Employee.Surname,
+                Age = model.Employee.Age,
+                Gender = model.Employee.Gender
+            };
             _employeeData.AddEmployee(employee);
 
-            var employeePlace = new EmployeePlace();
-            employeePlace.Id = Guid.NewGuid();
-            employeePlace.EmployeeId = employee.Id;
-            employeePlace.DepartmentId = model.Department.Id;
-            employeePlace.ProgrammingLanguageId = model.ProgrammingLanguage.Id;
+            var employeePlace = new EmployeePlace
+            {
+                Id = Guid.NewGuid(),
+                EmployeeId = employee.Id,
+                DepartmentId = new Guid(departmentId),
+                ProgrammingLanguageId = new Guid(programmingLanguageId)
+            };
             _employeeData.AddEmployeePlace(employeePlace);
 
-            return View();
-
+            return RedirectToAction("Index");
         }
 
         [Route("edit")]
-        public IActionResult Edit()
+        [HttpGet]
+        public IActionResult Edit(Guid? id)
         {
-            return Content("Edit");
+            if (id != null)
+            {
+                //ViewBag.departmentList = _employeeData.GetAllDepartments();
+                //ViewBag.programmingLanguageList = _employeeData.GetAllProgrammingLanguages();
+
+                var model = new EditEmployeePageViewModel();
+                model.EmployeePlace = _employeeData.GetEmployeePlace(id);
+                model.Employee = _employeeData.GetEmployee(model.EmployeePlace.EmployeeId);
+                model.Departments = _employeeData.GetAllDepartments();
+                model.ProgrammingLanguages = _employeeData.GetAllProgrammingLanguages();
+                
+                if (model == null)
+                {
+                    return NotFound($"Employee place with id = {id} not found");
+                }
+
+                return View(model);
+            }
+            return NotFound();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
