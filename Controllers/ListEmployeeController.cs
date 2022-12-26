@@ -142,5 +142,48 @@ namespace ArtsofteTestProject.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        [Route("department")]
+        [HttpGet]
+        public IActionResult AddDepartment()
+        {
+            return View();
+        }
+
+        [Route("department")]
+        [HttpPost]
+        public IActionResult AddDepartment(AddEmployeePageViewModel model)
+        {
+            var department = new Department
+            {
+                Id = Guid.NewGuid(),
+                Name = model.Department.Name,
+                Floor = model.Department.Floor
+            };
+            _employeeData.AddDepartment(department);
+
+            return RedirectToAction("Index");
+        }
+
+        [Route("language")]
+        [HttpGet]
+        public IActionResult AddLanguage()
+        {
+            return View();
+        }
+
+        [Route("language")]
+        [HttpPost]
+        public IActionResult AddLanguage(AddEmployeePageViewModel model)
+        {
+            var language = new ProgrammingLanguage
+            {
+                Id = Guid.NewGuid(),
+                Name = model.ProgrammingLanguage.Name,
+            };
+            _employeeData.AddProgrammingLanguage(language);
+
+            return RedirectToAction("Index");
+        }
     }
 }

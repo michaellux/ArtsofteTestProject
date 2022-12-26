@@ -1,6 +1,6 @@
 ﻿@model ArtsofteTestProject.ViewModels.AddEmployeePageViewModel;
 @{
-    ViewData["Title"] = "Adding an employee";
+    ViewData["Title"] = "Add department";
 }
 <div class="text-center">
     <h1 class="display-4 main__add">@ViewData["Title"]</h1>
@@ -13,7 +13,6 @@
                         @Html.LabelFor(m => m.Employee.Name, new { @class= "col-form-label, col-sm-6" })
                         <div class="col-sm-6">
                             <input type="text" class="form-control" name="Employee.Name" data-autocomplete-source='@Url.Action("AutocompleteSearch", "ListEmployee")' />
-                            @*@Html.TextBoxFor(m => m.Employee.Name, new { @class= "form-control", data-autocomplete-source='@Url.Action("AutocompleteSearch", "Home")' })*@
                         </div>
                     </div>
                     <div class="row mb-3">

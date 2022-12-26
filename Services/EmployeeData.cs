@@ -22,6 +22,8 @@ namespace ArtsofteTestProject.Services
         void DeleteEmployeePlace(EmployeePlace employeePlace);
         EmployeePlace GetEmployeePlace(Guid? id);
         Employee GetEmployee(Guid? id);
+        void AddDepartment(Department newDepartment);
+        void AddProgrammingLanguage(ProgrammingLanguage programmingLanguage);
     }
 
     public class SqlEmployeeData : IEmployeeData
@@ -154,6 +156,18 @@ namespace ArtsofteTestProject.Services
                 $"{storedProcedure}"
             ).ToList();
             return programmingLanguages;
+        }
+
+        public void AddDepartment(Department newDepartment)
+        {
+            _context.Department.Add(newDepartment);
+            _context.SaveChanges();
+        }
+
+        public void AddProgrammingLanguage(ProgrammingLanguage programmingLanguage)
+        {
+            _context.ProgrammingLanguage.Add(programmingLanguage);
+            _context.SaveChanges();
         }
     }
 }
