@@ -1,6 +1,7 @@
 ﻿using ArtsofteTestProject.Models;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.Collections;
 using System.Xml.Linq;
 using static Azure.Core.HttpHeader;
@@ -33,7 +34,13 @@ namespace ArtsofteTestProject.Services
 
         public Employee GetEmployee(Guid? id)
         {
-            return _context.Employee.FirstOrDefault(employee => employee.Id == id);
+            string storedProcedure = "GetEmployee";
+            SqlParameter paramId = new SqlParameter("@p_Id", id);
+            var employee = _context.Employee.FromSqlRaw(
+                $"{storedProcedure} @p_Id",
+                paramId
+            ).ToList().FirstOrDefault();
+            return employee;
         }
 
         public void AddEmployee(Employee newEmployee)
@@ -66,6 +73,19 @@ namespace ArtsofteTestProject.Services
             );
         }
 
+        public EmployeePlace GetEmployeePlace(Guid? id)
+        {
+            //return _context.EmployeePlace.FirstOrDefault(employeePlace => employeePlace.Id == id);
+
+            string storedProcedure = "GetEmployeePlace";
+            SqlParameter paramId = new SqlParameter("@p_Id", id);
+            var employeePlace = _context.EmployeePlace.FromSqlRaw(
+                $"{storedProcedure} @p_Id",
+                paramId
+            ).ToList().FirstOrDefault();
+            return employeePlace;
+        }
+
         public void AddEmployeePlace(EmployeePlace newEmployeePlace)
         {
             string storedProcedure = "InsertEmployeePlace";
@@ -92,10 +112,7 @@ namespace ArtsofteTestProject.Services
             );
         }
 
-        public EmployeePlace GetEmployeePlace(Guid? id)
-        {
-            return _context.EmployeePlace.FirstOrDefault(employeePlace => employeePlace.Id == id);
-        }
+
 
         public IEnumerable<EmployeePlace> GetAllEmployeePlaces()
         {
