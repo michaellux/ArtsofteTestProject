@@ -29,6 +29,46 @@
       {
          "Name": "[dbo].[ProgrammingLanguage]",
          "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[DeleteEmployeePlace]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[GetAllDepartments]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[GetAllEmployee]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[GetAllProgrammingLanguages]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[GetEmployee]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[GetEmployeePlace]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[InsertEmployee]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[InsertEmployeePlace]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[UpdateEmployee]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[UpdateEmployeePlace]",
+         "ObjectType": 1
       }
    ],
    "UiHint": "(localdb)\\MSSQLLocalDB.ArtsofteTestProject",

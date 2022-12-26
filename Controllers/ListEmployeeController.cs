@@ -1,10 +1,7 @@
 ﻿using ArtsofteTestProject.Models;
 using ArtsofteTestProject.Services;
 using ArtsofteTestProject.ViewModels;
-using ItpdevelopmentTestProject.Models;
-using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Diagnostics;
 
 namespace ArtsofteTestProject.Controllers

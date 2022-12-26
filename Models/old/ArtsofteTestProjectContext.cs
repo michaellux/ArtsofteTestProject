@@ -11,8 +11,6 @@ public partial class ArtsofteTestProjectContext : DbContext
     public ArtsofteTestProjectContext(DbContextOptions<ArtsofteTestProjectContext> options)
         : base(options)
     {
-        //Database.EnsureDeleted();   // удаляем бд со старой схемой
-        Database.EnsureCreated();   // создаем бд с новой схемой
     }
 
     public virtual DbSet<Department> Department { get; set; }
@@ -75,7 +73,6 @@ public partial class ArtsofteTestProjectContext : DbContext
                 .HasMaxLength(50);
         });
 
-        OnModelCreatingGeneratedProcedures(modelBuilder);
         OnModelCreatingPartial(modelBuilder);
     }
 
