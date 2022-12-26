@@ -13,11 +13,11 @@ namespace ArtsofteTestProject.Services
         IEnumerable<EmployeePlace> GetAllEmployeePlaces();
         IEnumerable<Department> GetAllDepartments();
         IEnumerable<ProgrammingLanguage> GetAllProgrammingLanguages();
-        void EditEmployeePlace(EmployeePlace employeePlace);
-        void EditEmployee(Employee employee);
         void AddEmployee(Employee newEmployee);
-        void DeleteEmployeePlace(EmployeePlace employeePlace);
+        void EditEmployee(Employee employee);
         void AddEmployeePlace(EmployeePlace newEmployeePlace);
+        void EditEmployeePlace(EmployeePlace employeePlace);
+        void DeleteEmployeePlace(EmployeePlace employeePlace);
         EmployeePlace GetEmployeePlace(Guid? id);
         Employee GetEmployee(Guid? id);
     }
@@ -31,41 +31,38 @@ namespace ArtsofteTestProject.Services
             _context = context;
         }
 
-        //public bool StoredProcedureExists(string procedureName)
-        //{
-        //    return _context.Database.SqlQueryRaw<int>("SELECT COUNT(*) FROM sys.objects WHERE type = 'P' AND name = @uspName",
-        //                               new SqlParameter("@uspName", procedureName)).Single() == 0;
-        //}
-
         public void AddEmployee(Employee newEmployee)
         {
-            _context.Employee.Add(newEmployee);
+            string storedProcedure = "InsertEmployee";
+            SqlParameter paramId = new SqlParameter("@p_Id", newEmployee.Id);
+            SqlParameter paramName = new("@p_Name", newEmployee.Name);
+            SqlParameter paramSurname = new("@p_Surname", newEmployee.Surname);
+            SqlParameter paramAge = new("@p_Age", newEmployee.Age);
+            SqlParameter paramGender = new("@p_Gender", newEmployee.Gender);
+
+            _context.Database.ExecuteSqlRaw(
+                $"EXEC {storedProcedure} @p_Id, @p_Name, @p_Surname, @p_Age, @p_Gender",
+                paramId, paramName, paramSurname, paramAge, paramGender
+            );
+        }
+
+        public void EditEmployee(Employee employee)
+        {
+            _context.Employee.Update(employee);
             _context.SaveChanges();
-            //string storedProcedure = "InsertEmployee";
-            //if (StoredProcedureExists(storedProcedure))
-            //{
-            //    SqlParameter paramId = new("@p_Id", newEmployee.Id);
-            //    SqlParameter paramName = new("@p_Name", newEmployee.Name);
-            //    SqlParameter paramSurname = new("@p_Surname", newEmployee.Surname);
-            //    SqlParameter paramAge = new("@p_Age", newEmployee.Age);
-            //    SqlParameter paramGender = new("@p_Gender", newEmployee.Gender);
-
-            //    //_context.Employee.FromSqlRaw(
-            //    //    $"{storedProcedure} @p_Id, @p_Name, @p_Surname, @p_Age, @p_Gender",
-            //    //    paramId, paramName, paramSurname, paramAge, paramGender
-            //    //);
-
-            //_context.Database.ExecuteSqlRaw(
-            //    $"{storedProcedure} @p_Id, @p_Name, @p_Surname, @p_Age, @p_Gender",
-            //    newEmployee.Id, newEmployee.Name, newEmployee.Surname, newEmployee.Age, newEmployee.Gender
-            //);
-            ////}
         }
 
         public void AddEmployeePlace(EmployeePlace newEmployeePlace)
         {
-            _context.EmployeePlace.Add(newEmployeePlace);
-            _context.SaveChanges();
+            string storedProcedure = "InsertEmployeePlace";
+            SqlParameter paramId = new SqlParameter("@p_Id", newEmployeePlace.Id);
+            SqlParameter paramEmployeeId = new SqlParameter("@p_EmployeeId", newEmployeePlace.EmployeeId);
+            SqlParameter paramDepartmentId = new SqlParameter("@p_DepartmentId", newEmployeePlace.DepartmentId);
+            SqlParameter paramProgrammingLanguageId = new SqlParameter("@p_ProgrammingLanguageId", newEmployeePlace.ProgrammingLanguageId);
+            _context.Database.ExecuteSqlRaw(
+                $"EXEC {storedProcedure} @p_Id, @p_EmployeeId, @p_DepartmentId, @p_ProgrammingLanguageId",
+                paramId, paramEmployeeId, paramDepartmentId, paramProgrammingLanguageId
+            );
         }
 
         public EmployeePlace GetEmployeePlace(Guid? id)
@@ -76,12 +73,6 @@ namespace ArtsofteTestProject.Services
         public void EditEmployeePlace(EmployeePlace employeePlace)
         {
             _context.EmployeePlace.Update(employeePlace);
-            _context.SaveChanges();
-        }
-
-        public void EditEmployee(Employee employee)
-        {
-            _context.Employee.Update(employee);
             _context.SaveChanges();
         }
 
