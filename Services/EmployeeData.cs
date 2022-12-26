@@ -31,6 +31,11 @@ namespace ArtsofteTestProject.Services
             _context = context;
         }
 
+        public Employee GetEmployee(Guid? id)
+        {
+            return _context.Employee.FirstOrDefault(employee => employee.Id == id);
+        }
+
         public void AddEmployee(Employee newEmployee)
         {
             string storedProcedure = "InsertEmployee";
@@ -48,8 +53,17 @@ namespace ArtsofteTestProject.Services
 
         public void EditEmployee(Employee employee)
         {
-            _context.Employee.Update(employee);
-            _context.SaveChanges();
+            string storedProcedure = "UpdateEmployee";
+            SqlParameter paramId = new SqlParameter("@p_Id", employee.Id);
+            SqlParameter paramName = new("@p_Name", employee.Name);
+            SqlParameter paramSurname = new("@p_Surname", employee.Surname);
+            SqlParameter paramAge = new("@p_Age", employee.Age);
+            SqlParameter paramGender = new("@p_Gender", employee.Gender);
+
+            _context.Database.ExecuteSqlRaw(
+                $"EXEC {storedProcedure} @p_Id, @p_Name, @p_Surname, @p_Age, @p_Gender",
+                paramId, paramName, paramSurname, paramAge, paramGender
+            );
         }
 
         public void AddEmployeePlace(EmployeePlace newEmployeePlace)
@@ -65,15 +79,22 @@ namespace ArtsofteTestProject.Services
             );
         }
 
+        public void EditEmployeePlace(EmployeePlace employeePlace)
+        {
+            string storedProcedure = "UpdateEmployeePlace";
+            SqlParameter paramId = new SqlParameter("@p_Id", employeePlace.Id);
+            SqlParameter paramEmployeeId = new SqlParameter("@p_EmployeeId", employeePlace.EmployeeId);
+            SqlParameter paramDepartmentId = new SqlParameter("@p_DepartmentId", employeePlace.DepartmentId);
+            SqlParameter paramProgrammingLanguageId = new SqlParameter("@p_ProgrammingLanguageId", employeePlace.ProgrammingLanguageId);
+            _context.Database.ExecuteSqlRaw(
+                $"EXEC {storedProcedure} @p_Id, @p_EmployeeId, @p_DepartmentId, @p_ProgrammingLanguageId",
+                paramId, paramEmployeeId, paramDepartmentId, paramProgrammingLanguageId
+            );
+        }
+
         public EmployeePlace GetEmployeePlace(Guid? id)
         {
             return _context.EmployeePlace.FirstOrDefault(employeePlace => employeePlace.Id == id);
-        }
-
-        public void EditEmployeePlace(EmployeePlace employeePlace)
-        {
-            _context.EmployeePlace.Update(employeePlace);
-            _context.SaveChanges();
         }
 
         public IEnumerable<EmployeePlace> GetAllEmployeePlaces()
@@ -92,11 +113,6 @@ namespace ArtsofteTestProject.Services
         public IEnumerable<ProgrammingLanguage> GetAllProgrammingLanguages()
         {
             return _context.ProgrammingLanguage.ToList();
-        }
-
-        public Employee GetEmployee(Guid? id)
-        {
-            return _context.Employee.FirstOrDefault(employee => employee.Id == id);
         }
 
         public IEnumerable<Employee> GetAllEmployee()
