@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
@@ -80,6 +81,16 @@ namespace ArtsofteTestProject.Migrations
                         principalColumn: "Id");
                 });
 
+            migrationBuilder.InsertData(
+                table: "Department",
+                columns: new[] { "Id", "Floor", "Name" },
+                values: new object[] { new Guid("99d8e7af-aad8-4c37-ac95-bf1186670d95"), 1, "First" });
+
+            migrationBuilder.InsertData(
+                table: "ProgrammingLanguage",
+                columns: new[] { "Id", "Name" },
+                values: new object[] { new Guid("651e9bd9-cfe8-42a1-b47b-a48b89f3e556"), "Fortran" });
+
             migrationBuilder.CreateIndex(
                 name: "IX_EmployeePlace_DepartmentId",
                 table: "EmployeePlace",
@@ -94,6 +105,20 @@ namespace ArtsofteTestProject.Migrations
                 name: "IX_EmployeePlace_ProgrammingLanguageId",
                 table: "EmployeePlace",
                 column: "ProgrammingLanguageId");
+
+            //var assembly = Assembly.GetExecutingAssembly();
+            //var resourceNames =
+            //            assembly.GetManifestResourceNames().
+            //            Where(str => str.EndsWith(".sql"));
+            //foreach (string resourceName in resourceNames)
+            //{
+            //    using (Stream stream = assembly.GetManifestResourceStream(resourceName))
+            //    using (StreamReader reader = new StreamReader(stream))
+            //    {
+            //        string sql = reader.ReadToEnd();
+            //        migrationBuilder.Sql(sql);
+            //    }
+            //}
         }
 
         /// <inheritdoc />

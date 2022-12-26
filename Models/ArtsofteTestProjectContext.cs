@@ -75,9 +75,31 @@ public partial class ArtsofteTestProjectContext : DbContext
                 .HasMaxLength(50);
         });
 
+        FillTestData(modelBuilder);
+
         OnModelCreatingGeneratedProcedures(modelBuilder);
         OnModelCreatingPartial(modelBuilder);
     }
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+
+    private static void FillTestData(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Department>().HasData(
+            new Department
+            {
+                Id = Guid.NewGuid(),
+                Name = "First",
+                Floor = 1
+            }
+         );
+
+        modelBuilder.Entity<ProgrammingLanguage>().HasData(
+            new Department
+            {
+                Id = Guid.NewGuid(),
+                Name = "Fortran"
+            }
+         );
+    }
 }

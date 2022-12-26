@@ -38,6 +38,14 @@ namespace ArtsofteTestProject.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Department");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("99d8e7af-aad8-4c37-ac95-bf1186670d95"),
+                            Floor = 1,
+                            Name = "First"
+                        });
                 });
 
             modelBuilder.Entity("ArtsofteTestProject.Models.Employee", b =>
@@ -198,6 +206,13 @@ namespace ArtsofteTestProject.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ProgrammingLanguage");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("651e9bd9-cfe8-42a1-b47b-a48b89f3e556"),
+                            Name = "Fortran"
+                        });
                 });
 
             modelBuilder.Entity("ArtsofteTestProject.Models.EmployeePlace", b =>
