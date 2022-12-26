@@ -43,6 +43,15 @@ namespace ArtsofteTestProject.Services
             return employee;
         }
 
+        public IEnumerable<Employee> GetAllEmployee()
+        {
+            string storedProcedure = "GetAllEmployee";
+            var employees = _context.Employee.FromSqlRaw(
+                $"{storedProcedure}"
+            ).ToList();
+            return employees;
+        }
+
         public void AddEmployee(Employee newEmployee)
         {
             string storedProcedure = "InsertEmployee";
@@ -75,8 +84,6 @@ namespace ArtsofteTestProject.Services
 
         public EmployeePlace GetEmployeePlace(Guid? id)
         {
-            //return _context.EmployeePlace.FirstOrDefault(employeePlace => employeePlace.Id == id);
-
             string storedProcedure = "GetEmployeePlace";
             SqlParameter paramId = new SqlParameter("@p_Id", id);
             var employeePlace = _context.EmployeePlace.FromSqlRaw(
@@ -84,6 +91,14 @@ namespace ArtsofteTestProject.Services
                 paramId
             ).ToList().FirstOrDefault();
             return employeePlace;
+        }
+
+        public IEnumerable<EmployeePlace> GetAllEmployeePlaces()
+        {
+            return _context.EmployeePlace
+                .Include(employeePlace => employeePlace.Employee)
+                .Include(employeePlace => employeePlace.Department)
+                .Include(employeePlace => employeePlace.ProgrammingLanguage).ToList();
         }
 
         public void AddEmployeePlace(EmployeePlace newEmployeePlace)
@@ -112,35 +127,32 @@ namespace ArtsofteTestProject.Services
             );
         }
 
-
-
-        public IEnumerable<EmployeePlace> GetAllEmployeePlaces()
+        public void DeleteEmployeePlace(EmployeePlace employeePlace)
         {
-            return _context.EmployeePlace
-                .Include(employeePlace => employeePlace.Employee)
-                .Include(employeePlace => employeePlace.Department)
-                .Include(employeePlace => employeePlace.ProgrammingLanguage).ToList();
+            string storedProcedure = "DeleteEmployeePlace";
+            SqlParameter paramId = new SqlParameter("@p_Id", employeePlace.Id);
+            _context.Database.ExecuteSqlRaw(
+                $"EXEC {storedProcedure} @p_Id",
+                paramId
+            );
         }
 
         public IEnumerable<Department> GetAllDepartments()
         {
-            return _context.Department.ToList();
+            string storedProcedure = "GetAllDepartments";
+            var departments = _context.Department.FromSqlRaw(
+                $"{storedProcedure}"
+            ).ToList();
+            return departments;
         }
 
         public IEnumerable<ProgrammingLanguage> GetAllProgrammingLanguages()
         {
-            return _context.ProgrammingLanguage.ToList();
-        }
-
-        public IEnumerable<Employee> GetAllEmployee()
-        {
-            return _context.Employee.ToList();
-        }
-
-        public void DeleteEmployeePlace(EmployeePlace employeePlace)
-        {
-            _context.EmployeePlace.Remove(employeePlace);
-            _context.SaveChanges();
+            string storedProcedure = "GetAllProgrammingLanguages";
+            var programmingLanguages = _context.ProgrammingLanguage.FromSqlRaw(
+                $"{storedProcedure}"
+            ).ToList();
+            return programmingLanguages;
         }
     }
 }
