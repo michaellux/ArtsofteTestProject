@@ -12,5 +12,5 @@ Apply migration:
 
 ![Скриншот программы](./Screenshot_7.png)
 
-Add stored procedure to database:
+Add stored procedures to database:
 ![Скриншот программы](./Screenshot_6.png)
