@@ -12,31 +12,31 @@
                     <input type="hidden" name="EmployeePlace.Id" value="@Model.EmployeePlace.Id" />
                     <input type="hidden" name="Employee.Id" value="@Model.Employee.Id" />
                     <div class="row mb-3">
-                        @Html.LabelFor(m => m.Employee.Name, new { @class= "col-form-label, col-sm-6" })
+                        @Html.LabelFor(m => m.Employee.Name, new { @class= "col-form-label col-sm-6" })
                         <div class="col-sm-6">
                             @Html.TextBoxFor(m => m.Employee.Name, new { @class= "form-control" })
                         </div>
                     </div>
                     <div class="row mb-3">
-                        @Html.LabelFor(m => m.Employee.Surname, new { @class= "col-form-label, col-sm-6" })
+                        @Html.LabelFor(m => m.Employee.Surname, new { @class= "col-form-label col-sm-6" })
                         <div class="col-sm-6">
                             @Html.TextBoxFor(m => m.Employee.Surname, new { @class= "form-control" })
                         </div>
                     </div>
                     <div class="row mb-3">
-                        @Html.LabelFor(m => m.Employee.Age, new { @class= "col-form-label, col-sm-6" })
+                        @Html.LabelFor(m => m.Employee.Age, new { @class= "col-form-label col-sm-6" })
                         <div class="col-sm-6">
                             @Html.TextBoxFor(m => m.Employee.Age, new { @class= "form-control", type="number" })
                         </div>
                     </div>
                     <div class="row mb-3">
-                        @Html.LabelFor(m => m.Employee.Gender, new { @class= "col-form-label, col-sm-6" })
+                        @Html.LabelFor(m => m.Employee.Gender, new { @class= "col-form-label col-sm-6" })
                         <div class="col-sm-6">
                             @Html.TextBoxFor(m => m.Employee.Gender, new { @class= "form-control" })
                         </div>
                     </div>
                     <div class="row mb-3">
-                        @Html.LabelFor(m => m.EmployeePlace.Department, new { @class= "col-form-label, col-sm-6" })
+                        @Html.LabelFor(m => m.EmployeePlace.Department, new { @class= "col-form-label col-sm-6" })
                         <div class="col-sm-6">
                             <select name="EmployeePlace.DepartmentId" class="form-control">
                                 <option value="" disabled>Choose a department</option>
@@ -55,7 +55,7 @@
                         </div>
                     </div>
                     <div class="row mb-3">
-                        @Html.LabelFor(m => m.EmployeePlace.ProgrammingLanguage, new { @class= "col-form-label, col-sm-6" })
+                        @Html.LabelFor(m => m.EmployeePlace.ProgrammingLanguage, new { @class= "col-form-label col-sm-6" })
                         <div class="col-sm-6">
                             <select name="EmployeePlace.ProgrammingLanguageId" class="form-control">
                                 <option value="" disabled>Choose a programming language</option>

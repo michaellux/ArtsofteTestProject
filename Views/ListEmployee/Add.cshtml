@@ -10,38 +10,38 @@
                 @using (Html.BeginForm())
                 {
                     <div class="row mb-3">
-                        @Html.LabelFor(m => m.Employee.Name, new { @class= "col-form-label, col-sm-6" })
+                        @Html.LabelFor(m => m.Employee.Name, new { @class= "col-form-label col-sm-6" })
                         <div class="col-sm-6">
                             <input type="text" class="form-control" name="Employee.Name" data-autocomplete-source='@Url.Action("AutocompleteSearch", "ListEmployee")' />
                         </div>
                     </div>
                     <div class="row mb-3">
-                        @Html.LabelFor(m => m.Employee.Surname, new { @class= "col-form-label, col-sm-6" })
+                        @Html.LabelFor(m => m.Employee.Surname, new { @class= "col-form-label col-sm-6" })
                         <div class="col-sm-6">
                             @Html.TextBoxFor(m => m.Employee.Surname, new { @class= "form-control" })
                         </div>
                     </div>
                     <div class="row mb-3">
-                        @Html.LabelFor(m => m.Employee.Age, new { @class= "col-form-label, col-sm-6" })
+                        @Html.LabelFor(m => m.Employee.Age, new { @class= "col-form-label col-sm-6" })
                         <div class="col-sm-6">
                             @Html.TextBoxFor(m => m.Employee.Age, new { @class= "form-control", type="number" })
                         </div>
                     </div>
                     <div class="row mb-3">
-                        @Html.LabelFor(m => m.Employee.Gender, new { @class= "col-form-label, col-sm-6" })
+                        @Html.LabelFor(m => m.Employee.Gender, new { @class= "col-form-label col-sm-6" })
                         <div class="col-sm-6">
                             @Html.TextBoxFor(m => m.Employee.Gender, new { @class= "form-control" })
                         </div>
                     </div>
                     <div class="row mb-3">
-                        @Html.LabelFor(m => m.Department, new { @class= "col-form-label, col-sm-6" })
+                        @Html.LabelFor(m => m.Department, new { @class= "col-form-label col-sm-6" })
                         <div class="col-sm-6">
                             @Html.DropDownListFor(m => m.Department, new SelectList(ViewBag.departmentList, "Id", "Name"),
                         "Choose a department", new { @class = "form-control" })
                         </div>
                     </div>
                     <div class="row mb-3">
-                        @Html.LabelFor(m => m.ProgrammingLanguage, new { @class= "col-form-label, col-sm-6" })
+                        @Html.LabelFor(m => m.ProgrammingLanguage, new { @class= "col-form-label col-sm-6" })
                         <div class="col-sm-6">
                             @Html.DropDownListFor(m => m.ProgrammingLanguage, new SelectList(ViewBag.programmingLanguageList, "Id", "Name"),
                         "Choose a language", new { @class = "form-control" })
